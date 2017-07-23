@@ -57,11 +57,13 @@ public:
 	void setShowMode(int m_show_){m_show=m_show_;};
 	bool ReadImage(string filePath){
 		newImagePath=filePath;
+		clearImap();
 		mat=cv::imread(newImagePath);
 		if(mat.cols>0)m_bNewImage=true;
 		return m_bNewImage;
 	};
 	I_MAP getImap_(){return pt;};
+	void clearImap(){pt.clear();};
 	cv::Size getImageSize(){return cv::Size(mat.cols,mat.rows);};
 private:
 	DrawFrame *m_owner;

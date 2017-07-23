@@ -54,6 +54,7 @@ enum
 	ReadImage,
 	ManualCalib,
 	WriteCalibParameter,
+	ReadCalibParameter, 
     // it is important for the id corresponding to the "About" command to have
     // this standard value as otherwise it won't be handled properly under Mac
     // (where it is special and put into the "Apple" menu)
@@ -73,6 +74,7 @@ wxBEGIN_EVENT_TABLE(MyFrame, wxFrame)
 	EVT_MENU(ReadImage, MyFrame::OnReadImage)
 	EVT_MENU(ManualCalib, MyFrame::OnManualCalib)
 	EVT_MENU(WriteCalibParameter, MyFrame::OnWriteCalibParameter)
+	EVT_MENU(ReadCalibParameter, MyFrame::OnReadCalibParameter)
     EVT_MENU(Minimal_About, MyFrame::OnAbout)
 	EVT_SIZE(MyFrame::OnSize)
 wxEND_EVENT_TABLE()
@@ -136,8 +138,11 @@ MyFrame::MyFrame(const wxString& title)
     fileMenu->Append(ReadImage, "Read Image File", "Read Image File");
     fileMenu->Append(Minimal_Quit, "E&xit\tAlt-X", "Quit this program");
 
-	calibMenu->Append(ManualCalib,"Manual Calibration","Compute Extrinsic Parameter");
 
+	calibMenu->Append(ManualCalib,"Manual Calibration","Compute Extrinsic Parameter");
+	calibMenu->Append(wxID_SEPARATOR);
+	calibMenu->Append(WriteCalibParameter,"Write Calibration Parameter","Write Calibration Parameter");
+	calibMenu->Append(ReadCalibParameter,"Write Calibration Parameter","Write Calibration Parameter");
     // now append the freshly created menu to the menu bar...
     wxMenuBar *menuBar = new wxMenuBar();
     menuBar->Append(fileMenu, "&File");
@@ -290,6 +295,34 @@ void MyFrame::OnWriteCalibParameter(wxCommandEvent& WXUNUSED(event)){
 	}
 }
 
+void MyFrame::OnReadCalibParameter(wxCommandEvent& WXUNUSED(event)){
+	wxFileDialog dialog(this,
+                        wxT("Cpara File"),
+						wxEmptyString,
+                        wxEmptyString,
+                        wxT("cpara files (*.cpara)|*.cpara"),
+						wxFD_OPEN);
+
+    dialog.SetFilterIndex(1);
+	if (dialog.ShowModal() == wxID_OK){
+		Matrix4d m=readCPara((string)dialog.GetPath());		
+		m_canvas->SetCameraParameter(m2_6dof(m));
+	}
+		
+		//{
+	//	Vector3d t;
+	//	Matrix3d r;
+
+	//	m_canvas->GetCameraParameter(t,r);//2d->3d
+	//	Vector4d q=dcm2q(r);
+	//	ofstream ofs((string)dialog.GetPath());
+	//	ofs<<"Camera Parameter, Trans"<<endl
+	//		<<t(0)<<" "<<t(1)<<" "<<t(2)<<endl
+	//		<<"Rotation"<<endl
+	//		<<q(0)<<" "<<q(1)<<" "<<q(2)<<" "<<q(3)<<endl;
+	//	ofs.close();
+	//}
+}
 
 
 void MyFrame::OnAbout(wxCommandEvent& WXUNUSED(event))

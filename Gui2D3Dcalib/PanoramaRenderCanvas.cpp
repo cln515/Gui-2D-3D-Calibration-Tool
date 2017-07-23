@@ -35,7 +35,7 @@ void MainGLCanvas::OnPaint(wxPaintEvent &event)
 	const wxSize ClientSize = GetClientSize();
 	if(!isInitialized_){
       renderer.initialize();
-	  renderer.readPlyFile("C:\\Users\\ryoichi\\Documents\\Visual Studio 2012\\Projects\\Gui2D3Dcalib\\x64\\Release\\Seiken2_ds.ply");
+	  //renderer.readPlyFile("C:\\Users\\ryoichi\\Documents\\Visual Studio 2012\\Projects\\Gui2D3Dcalib\\x64\\Release\\Seiken2_ds.ply");
       int w;
       int h;
 	  GetClientSize(&w, &h);
@@ -46,10 +46,11 @@ void MainGLCanvas::OnPaint(wxPaintEvent &event)
 	  T<<0,0,0;
 	}
 	if(bDataChange){
-		renderer.readPlyFile(newPlyFile);
+		renderer.clearMap();
+		T=-renderer.readPlyFile(newPlyFile);
 		bDataChange=false;
 		R=Matrix3d::Identity();
-	  T<<0,0,0;
+	  //T<<0,0,0;
 	}
 	renderer.setCameraMat(R,T);
 	renderer.draw();

@@ -27,9 +27,10 @@ class Renderer
 	void setCameraMat(Matrix3d& R,Vector3d& T);
 
     void draw();
-	void readPlyFile(string filePath);
+	Vector3d readPlyFile(string filePath);
 	int get3Dcoordinate(double x,double y,Vector3d& depth);
 	P_MAP get3DMap(){return selectedPoint;};
+	void clearMap(){selectedPoint.clear();};
 private:
 	Matrix3d cR;
 	Vector3d cT;

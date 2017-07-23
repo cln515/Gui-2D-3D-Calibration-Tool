@@ -11,5 +11,6 @@
 #define CALIB
 
 _6dof absolutePoseRansac(opengv::bearingVectors_t bearingVectors,opengv::points_t points);
+_6dof nonLinearAbsolutePoseRansac(opengv::bearingVectors_t bearingVectors,opengv::points_t points);
 
 #endif

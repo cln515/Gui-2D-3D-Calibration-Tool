@@ -57,7 +57,7 @@
 	  GLint view[4];
       glGetIntegerv(GL_VIEWPORT,view);
 	  pr.shaderEnable(0);
-	  glPointSize(3.0f);
+	  glPointSize(12.0f);
 	  glBegin(GL_POINTS);
 	  for(auto itr=selectedPoint.begin();itr!=selectedPoint.end();itr++){
 		  int i=itr->first;
@@ -78,7 +78,7 @@
 	  glDisableClientState(GL_VERTEX_ARRAY);*/
     }
 
-	void Renderer::readPlyFile(string filePath){
+	Vector3d Renderer::readPlyFile(string filePath){
 		vector<string> fileNames;
 		fileNames.push_back(filePath);
 		plyData.release();
@@ -86,6 +86,7 @@
 		verteces=plyData.getVertecesPointer();
 		vertSize=plyData.getVertexNumber();
 		pr.setDataRGBfromReflectance(verteces,plyData.getFaces(),plyData.getReflectancePointer(),plyData.getVertexNumber(),plyData.getFaceNumber());
+		return plyData.getCentroid();
 	}
 
 	int Renderer::get3Dcoordinate(double x,double y,Vector3d& depth){
@@ -111,6 +112,7 @@
 		if(depthArray[idx]<1.0){
 			double depth_=depthArray[idx];
 			depth_*=(FAR_-NEAR_);
+			depth_+=NEAR_;
 			rev_omniTrans(x,y,view[2],view[3],depth);
 			depth*=depth_;
 			depth=cR.inverse()*(depth-cT);
