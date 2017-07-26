@@ -36,7 +36,7 @@ public:
     // this one is called on application startup and is a good place for the app
     // initialization (doing it here and not in the ctor allows to have an error
     // return: if OnInit() returns false, the application terminates)
-    virtual bool OnInit() wxOVERRIDE;
+    virtual bool OnInit();
 };
 
 
@@ -192,7 +192,7 @@ void MyFrame::OnReadPly(wxCommandEvent& WXUNUSED(event)){
                                         wxFileSelectorDefaultWildcardStr,
                                         wxFileSelectorDefaultWildcardStr
                                     ),
-                                    wxFD_OPEN|wxFD_CHANGE_DIR|wxFD_PREVIEW|wxFD_NO_FOLLOW,
+                                    wxFD_OPEN|wxFD_CHANGE_DIR|wxFD_PREVIEW,
                                     this
                                    );
 
@@ -232,7 +232,7 @@ void MyFrame::OnReadImage(wxCommandEvent& WXUNUSED(event)){
                                         wxFileSelectorDefaultWildcardStr,
                                         wxFileSelectorDefaultWildcardStr
                                     ),
-                                    wxFD_OPEN|wxFD_CHANGE_DIR|wxFD_PREVIEW|wxFD_NO_FOLLOW,
+                                    wxFD_OPEN|wxFD_CHANGE_DIR|wxFD_PREVIEW,
                                     this
                                    );
 

@@ -16,6 +16,9 @@
     <Filter Include="addons">
       <UniqueIdentifier>{ce4c96b2-e1c2-4fe7-8bdb-7ac93308e612}</UniqueIdentifier>
     </Filter>
+    <Filter Include="assets">
+      <UniqueIdentifier>{c179a621-29b3-4923-8977-238b11677ff0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -23,21 +26,6 @@
     </ClCompile>
     <ClCompile Include="Renderer.cpp">
       <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\include\utility\utility.cpp">
-      <Filter>addons</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\include\basicPly\BasicPly.cpp">
-      <Filter>addons</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\include\PanoramaRenderer\PanoramaShaderRenderer.cpp">
-      <Filter>addons</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\include\ShaderPolarCoordinate\ShaderPolarCoordinate.cpp">
-      <Filter>addons</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\include\ShaderPolarCoordinate\glsl.cpp">
-      <Filter>addons</Filter>
     </ClCompile>
     <ClCompile Include="ImageWindow.cpp">
       <Filter>ソース ファイル</Filter>
@@ -48,6 +36,21 @@
     <ClCompile Include="Calibration.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\include\basicPly\BasicPly.cpp">
+      <Filter>addons</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\include\ShaderPolarCoordinate\glsl.cpp">
+      <Filter>addons</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\include\PanoramaRenderer\PanoramaShaderRenderer.cpp">
+      <Filter>addons</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\include\ShaderPolarCoordinate\ShaderPolarCoordinate.cpp">
+      <Filter>addons</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\include\utility\utility.cpp">
+      <Filter>addons</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PanoramaRenderCanvas.h">
@@ -55,21 +58,6 @@
     </ClInclude>
     <ClInclude Include="Renderer.h">
       <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\utility\utility.h">
-      <Filter>addons</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\basicPly\BasicPly.h">
-      <Filter>addons</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\PanoramaRenderer\PanoramaShaderRenderer.h">
-      <Filter>addons</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\ShaderPolarCoordinate\ShaderPolarCoordinate.h">
-      <Filter>addons</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\ShaderPolarCoordinate\glsl.h">
-      <Filter>addons</Filter>
     </ClInclude>
     <ClInclude Include="ImageWindow.h">
       <Filter>ヘッダー ファイル</Filter>
@@ -80,5 +68,25 @@
     <ClInclude Include="Calibration.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\basicPly\BasicPly.h">
+      <Filter>addons</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\ShaderPolarCoordinate\glsl.h">
+      <Filter>addons</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\PanoramaRenderer\PanoramaShaderRenderer.h">
+      <Filter>addons</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\ShaderPolarCoordinate\ShaderPolarCoordinate.h">
+      <Filter>addons</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\utility\utility.h">
+      <Filter>addons</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\assets\1461460139457.jpg">
+      <Filter>assets</Filter>
+    </Image>
   </ItemGroup>
 </Project>
