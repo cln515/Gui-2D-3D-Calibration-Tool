@@ -142,7 +142,7 @@ MyFrame::MyFrame(const wxString& title)
 	calibMenu->Append(ManualCalib,"Manual Calibration","Compute Extrinsic Parameter");
 	calibMenu->Append(wxID_SEPARATOR);
 	calibMenu->Append(WriteCalibParameter,"Write Calibration Parameter","Write Calibration Parameter");
-	calibMenu->Append(ReadCalibParameter,"Write Calibration Parameter","Write Calibration Parameter");
+	calibMenu->Append(ReadCalibParameter,"Read Calibration Parameter","Read Calibration Parameter");
     // now append the freshly created menu to the menu bar...
     wxMenuBar *menuBar = new wxMenuBar();
     menuBar->Append(fileMenu, "&File");
