@@ -34,7 +34,7 @@ MyCanvas::MyCanvas(DrawFrame *parent)
 	im_x=0;
 	im_y=0;
 	im_rate=1.0;
-	mat=cv::imread("..\\assets\\1461460139457.jpg");
+	mat=cv::imread("1461460139457.jpg");
 
 	if (mat.channels() == 3)
 	   cv::cvtColor(mat, mat, CV_BGR2RGB);
