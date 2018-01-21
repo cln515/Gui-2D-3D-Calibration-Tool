@@ -31,6 +31,8 @@ class Renderer
 	int get3Dcoordinate(double x,double y,Vector3d& depth);
 	P_MAP get3DMap(){return selectedPoint;};
 	void clearMap(){selectedPoint.clear();};
+	BasicPly getPlyData() { return plyData; };
+	
 private:
 	Matrix3d cR;
 	Vector3d cT;

@@ -54,6 +54,11 @@ void MainGLCanvas::OnPaint(wxPaintEvent &event)
 	}
 	renderer.setCameraMat(R,T);
 	renderer.draw();
+	if (reflectanceImage != NULL) {
+		GLint view[4];
+		glGetIntegerv(GL_VIEWPORT, view);
+		glReadPixels(view[0], view[1], view[2], view[3], GL_RED, GL_FLOAT, reflectanceImage);
+	}
 	glFlush();
 	SwapBuffers();
 }
@@ -113,6 +118,11 @@ void MainGLCanvas::OnSize(int w,int h)
 	 w=h*2;
 	 SetClientSize(w,h);
       renderer.setViewport(w, h);
+	  if (reflectanceImage != NULL) {
+		  free(reflectanceImage);
+	  }
+	  reflectanceImage = (GLfloat*)malloc(sizeof(GLfloat)*w * h);
+
 //    renderer.setViewport(event.GetSize().x, event.GetSize().y);
 	
 }

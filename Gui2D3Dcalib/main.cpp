@@ -55,6 +55,7 @@ enum
 	ManualCalib,
 	WriteCalibParameter,
 	ReadCalibParameter, 
+	WriteCheckerImage,
     // it is important for the id corresponding to the "About" command to have
     // this standard value as otherwise it won't be handled properly under Mac
     // (where it is special and put into the "Apple" menu)
@@ -75,6 +76,7 @@ wxBEGIN_EVENT_TABLE(MyFrame, wxFrame)
 	EVT_MENU(ManualCalib, MyFrame::OnManualCalib)
 	EVT_MENU(WriteCalibParameter, MyFrame::OnWriteCalibParameter)
 	EVT_MENU(ReadCalibParameter, MyFrame::OnReadCalibParameter)
+	EVT_MENU(WriteCheckerImage, MyFrame::OnWriteCheckImage)
     EVT_MENU(Minimal_About, MyFrame::OnAbout)
 	EVT_SIZE(MyFrame::OnSize)
 wxEND_EVENT_TABLE()
@@ -143,7 +145,10 @@ MyFrame::MyFrame(const wxString& title)
 	calibMenu->Append(wxID_SEPARATOR);
 	calibMenu->Append(WriteCalibParameter,"Write Calibration Parameter","Write Calibration Parameter");
 	calibMenu->Append(ReadCalibParameter,"Read Calibration Parameter","Read Calibration Parameter");
-    // now append the freshly created menu to the menu bar...
+	calibMenu->Append(wxID_SEPARATOR);
+	calibMenu->Append(WriteCheckerImage, "Write Checker Image", "Write Checker Image");
+
+	// now append the freshly created menu to the menu bar...
     wxMenuBar *menuBar = new wxMenuBar();
     menuBar->Append(fileMenu, "&File");
     menuBar->Append(calibMenu, "&Calibration");
@@ -254,8 +259,8 @@ void MyFrame::OnManualCalib(wxCommandEvent& WXUNUSED(event)){
 	//get3d
 	P_MAP pmap=m_canvas->Obtain3DPoint();
 	//make vector data
-	opengv::bearingVectors_t bv;
-	opengv::points_t pv;
+	vector<Vector3d> bv;
+	vector<Vector3d> pv;
 	for(auto itr=imap.begin();itr!=imap.end();itr++){
 		if(pmap.find(itr->first)!=pmap.end()){
 			cv::Point2f p=cv::Point2f();
@@ -265,8 +270,11 @@ void MyFrame::OnManualCalib(wxCommandEvent& WXUNUSED(event)){
 			pv.push_back(pmap.at(itr->first));
 		}
 	}
+	opengv::bearingVectors_t bv_= opengv::bearingVectors_t(bv.begin(),bv.end());
+	opengv::points_t pv_= opengv::bearingVectors_t(pv.begin(), pv.end());
 	//compute
-	_6dof camPara=absolutePoseRansac(bv,pv);
+	_6dof camPara=absolutePoseRansac(bv_,pv_);
+	nonLinearStandardSolving(bv,pv, size.width, size.height, camPara, 1.0);
 	m_canvas->SetCameraParameter(camPara);
 }
 
@@ -292,6 +300,60 @@ void MyFrame::OnWriteCalibParameter(wxCommandEvent& WXUNUSED(event)){
 			<<"Rotation"<<endl
 			<<q(0)<<" "<<q(1)<<" "<<q(2)<<" "<<q(3)<<endl;
 		ofs.close();
+	}
+}
+
+void MyFrame::OnWriteCheckImage(wxCommandEvent& WXUNUSED(event)) {
+	wxFileDialog dialog(this,
+		wxT("JPEG"),
+		wxEmptyString,
+		wxEmptyString,
+		wxT("jpeg files (*.jpg)|*.jpg"),
+		wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
+
+	dialog.SetFilterIndex(1);
+	if (dialog.ShowModal() == wxID_OK)
+	{
+		Vector3d t;
+		Matrix3d r;
+		m_canvas->GetCameraParameter(t, r);//2d->3d
+		Matrix3d rinv = r.inverse();
+		Vector3d tinv = -rinv*t;;
+
+		
+		cv::Mat checkerImage = dFrame->m_canvas->getImageClone();
+		cv::cvtColor(checkerImage, checkerImage, CV_BGR2RGB);
+		GLfloat* rfImage = m_canvas->getReflecImage();
+		
+		int w, h;
+		m_canvas->GetClientSize(&w, &h);
+		for (int idx = 0;idx < w*h;idx++) {
+			rfImage[idx] *= 256.0;
+			
+
+		}
+		cv::Mat reflImage(h, w, CV_32FC1),destref;
+		reflImage.data = (uchar*)rfImage;
+		
+		//cv::imwrite((string)dialog.GetPath(), reflImage);
+		cv::flip(reflImage, destref, 0);
+		for (int x = 0;x < checkerImage.size().width;x++) {
+			for(int y=0;y<checkerImage.size().height;y++){
+				int iy_ = y / (checkerImage.size().height / 10);
+				int ix_ = x / (checkerImage.size().width / 20);
+				if ((ix_ + iy_) % 2 == 1)continue;
+				double ix = (double)x*reflImage.size().width/checkerImage.size().width  ;
+				double iy = (double)y*reflImage.size().height/checkerImage.size().height;
+				double val[8];
+				getSubPixel_float(destref, cv::Point2f(ix, iy), val);
+				double r = val[0] * val[1] + val[2] * val[3] + val[4] * val[5] + val[6] * val[7];
+				cv::circle(checkerImage, cv::Point2f(x, y), 1, cv::Scalar(r, r, r));
+			}
+		}
+
+
+
+		cv::imwrite((string)dialog.GetPath(),checkerImage);
 	}
 }
 

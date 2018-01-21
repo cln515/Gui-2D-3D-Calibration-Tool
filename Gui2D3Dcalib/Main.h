@@ -12,6 +12,8 @@
 #endif
 
 #include "utility\utility.h"
+#include "NonLinearPoseSolver\NonLinearPoseSolver.h"
+#include "image_utility\image_utility.h"
 #include "Renderer.h"
 #include <wx/glcanvas.h>
 #include <gl\GLU.h>
@@ -53,6 +55,8 @@ public:
 	void OnWriteCalibParameter(wxCommandEvent& event);
 	void OnReadCalibParameter(wxCommandEvent& event);
 
+	void OnWriteCheckImage(wxCommandEvent& event);
+
 	void OnSize(wxSizeEvent &event);
     void OnAbout(wxCommandEvent& event);
 
@@ -76,6 +80,7 @@ private:
 	string newPlyFile;
 	bool bOriginCenter;
 	bool bCtrlDown;
+	GLfloat* reflectanceImage;
 	vector<POINT_3D> w_p;
 	vector<POINT_3D> i_p;
 public:
@@ -95,6 +100,10 @@ public:
 	void SetCameraParameter(_6dof camPara);
 	void GetCameraParameter(_6dof& camPara);
 	void GetCameraParameter(Vector3d& camTrans,Matrix3d& camRot);
+	BasicPly GetPlyData() {return renderer.getPlyData() ; };
+	GLfloat* getReflecImage() {
+		return reflectanceImage;
+	};
 	P_MAP Obtain3DPoint();
     wxDECLARE_EVENT_TABLE();
 

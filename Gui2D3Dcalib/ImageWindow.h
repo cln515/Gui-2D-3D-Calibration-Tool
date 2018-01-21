@@ -65,6 +65,7 @@ public:
 	I_MAP getImap_(){return pt;};
 	void clearImap(){pt.clear();};
 	cv::Size getImageSize(){return cv::Size(mat.cols,mat.rows);};
+	cv::Mat getImageClone() { return mat.clone(); };
 private:
 	DrawFrame *m_owner;
 	wxGraphicsRenderer* m_renderer;

@@ -51,6 +51,12 @@
     <ClCompile Include="..\..\include\utility\utility.cpp">
       <Filter>addons</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\include\NonLinearPoseSolver\NonLinearPoseSolver.cpp">
+      <Filter>addons</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\include\image_utility\image_utility.cpp">
+      <Filter>addons</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PanoramaRenderCanvas.h">
@@ -81,6 +87,12 @@
       <Filter>addons</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\utility\utility.h">
+      <Filter>addons</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\NonLinearPoseSolver\NonLinearPoseSolver.h">
+      <Filter>addons</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\image_utility\image_utility.h">
       <Filter>addons</Filter>
     </ClInclude>
   </ItemGroup>
